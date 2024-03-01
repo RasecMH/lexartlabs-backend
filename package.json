@@ -1,0 +1,36 @@
+{
+  "name": "lexartlabs-backend",
+  "version": "1.0.0",
+  "description": "Desafio tecnico para vaga fullstack javascript jr",
+  "main": "./src/api/server.js",
+  "scripts": {
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "start": "node .",
+    "predev": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "dev": "nodemon .",
+    "test": "mocha src/tests/**/*$NAME*.test.js --exit",
+    "test:reset": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all",
+    "test:coverage": "nyc --all npm run test",
+    "test:coverage:json": "nyc --all --reporter=json-summary npm run test",
+    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
+  },
+  "author": "Cesar Holanda",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint-config-trybe-backend": "1.0.4",
+    "nodemon": "^3.1.0",
+    "sequelize-cli": "^6.6.2"
+  },
+  "dependencies": {
+    "@vercel/postgres": "^0.7.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "joi": "^17.12.2",
+    "jsonwebtoken": "^9.0.2",
+    "md5": "^2.3.0",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.1"
+  }
+}
