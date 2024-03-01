@@ -12,9 +12,8 @@ const suffix = {
 };
 
 const options = {
-  url: process.env.POSTGRES_URL,
+  url: process.env.POSTGRES_URL_NO_SSL,
   host: process.env.HOSTNAME || process.env.POSTGRES_HOST || 'localhost',
-  port: process.env.POSTGRES_PORT || '3306',
   database: 
     `${process.env.POSTGRES_DATABASE || 'lexartlabs-db'}${suffix[environment] || suffix.test}`,
   username: process.env.POSTGRES_USER || 'root',
@@ -23,6 +22,7 @@ const options = {
   dialect: 'postgres',
   dialectOptions: {
     timezone: 'Z',
+    ssl: true,
   },
   logging: false,
 };
