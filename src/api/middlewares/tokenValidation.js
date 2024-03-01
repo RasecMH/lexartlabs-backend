@@ -1,9 +1,8 @@
-const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const { User } = require('../../database/models');
 require('dotenv/config');
 
-const secret = fs.readFileSync('jwt.evaluation.key', 'utf-8');
+const secret = process.env.JWT_SECRET || 'secret_key';
 
 module.exports = async (req, res, next) => {
 try {

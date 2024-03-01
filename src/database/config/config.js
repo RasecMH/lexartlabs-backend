@@ -1,4 +1,5 @@
 require('dotenv').config();
+const pg = require('pg');
 
 const environment = process.env.NODE_ENV || "test";
 
@@ -18,6 +19,7 @@ const options = {
     `${process.env.POSTGRES_DATABASE || 'lexartlabs-db'}${suffix[environment] || suffix.test}`,
   username: process.env.POSTGRES_USER || 'root',
   password: process.env.POSTGRES_PASSWORD || 'password',
+  dialectModule: pg,
   dialect: 'postgres',
   dialectOptions: {
     timezone: 'Z',
