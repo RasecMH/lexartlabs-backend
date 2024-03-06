@@ -1,7 +1,11 @@
 const express = require('express');
 const LoginController = require('../controllers/LoginController');
 
-const { newUserValidation, loginValidation, tokenValidation } = require('../middlewares');
+const {
+  newUserValidation,
+  loginValidation,
+  tokenValidation,
+} = require('../middlewares');
 
 const loginRouter = express.Router();
 const loginController = new LoginController();
@@ -18,14 +22,13 @@ loginRouter.post(
   (req, res, next) => loginController.findUser(req, res, next),
 );
 
-loginRouter.get(
-  '/validate',
-  (req, res, next) => tokenValidation(req, res, next),
-);
+loginRouter.get('/validate', (req, res, next) =>
+  tokenValidation(req, res, next));
 
 loginRouter.delete(
   '/:id',
-  (req, res, next) => loginController.remove(req, res, next),
+  (req, res, next) => tokenValidation(req, res, next),
+  (req, res, next) => loginController.delete(req, res, next),
 );
 
 module.exports = loginRouter;

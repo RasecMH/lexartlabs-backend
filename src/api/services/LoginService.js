@@ -35,7 +35,7 @@ class loginService {
   };
   }
 
-  async remove(id) {
+  async delete(id) {
     await this.model.destroy({
       where: { id },
     });

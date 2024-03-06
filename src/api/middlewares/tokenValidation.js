@@ -6,8 +6,7 @@ const secret = process.env.JWT_SECRET || 'secret_key';
 
 module.exports = async (req, res, next) => {
 try {
-  const token = req.header('Authorization');
-  
+  const token = req.cookies.token;
   if (!token) {
     return next({ type: 'TOKEN_ERROR', message: 'Token not found' });
   }
@@ -24,7 +23,7 @@ try {
   
   req.user = user;
 
-  res.status(200).json({ role: user.role });
+  next()
 } catch (_error) {
   return next({ type: 'UNAUTHORIZED_USER', message: 'Expired or invalid token' });
   }

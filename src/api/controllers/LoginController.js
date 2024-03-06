@@ -9,13 +9,11 @@ class LoginController {
   async createUser(req, res, next) {
     try {
       const { email, password, name } = req.body;
-
       const user = await this.serviceLogin.create({ email, password, name });
 
       const token = generateToken(user);
 
-      const answer = { name: user.name, email: user.email, token };
-      return res.status(201).json(answer);
+      return res.cookie('token', token).status(201).json(user);;
     } catch (error) {
       next(error);
     }
@@ -29,18 +27,16 @@ class LoginController {
 
       const token = generateToken(login);
 
-      const answer = { ...login, token };
-
-      return res.status(200).json(answer);
+      return res.cookie('token', token).status(200).json(login);
     } catch (error) {
       next(error);
     }
   }
 
-  async remove(req, res, next) {
+  async delete(req, res, next) {
     try {
       const { id } = req.params; 
-      await this.serviceLogin.remove(id);
+      await this.serviceLogin.delete(id);
 
       return res.status(204).end();
     } catch (error) {
