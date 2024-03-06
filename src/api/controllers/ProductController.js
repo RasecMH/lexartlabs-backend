@@ -1,4 +1,6 @@
 const ProductService = require('../services/ProductService');
+const payloadSerializer = require('../utils/Serializer');
+
 
 class ProductController {
   constructor() {
@@ -7,17 +9,16 @@ class ProductController {
 
   async create(req, res, next) {
     try {
-      const { products } = req.body;
+      const productsSerialized = payloadSerializer(req.body);
+      console.log(productsSerialized);
 
-      const newProducts = await Promise.all(products.map(async (product) => {
-        const newProduct = await this.service.create(product);
-
-        return {
-          ...newProduct.dataValues,
-        };
+      await Promise.all(productsSerialized.map(async (product) => {
+        await this.service.create(product);
       }));
 
-      return res.status(201).json({ products: newProducts });
+      const allProducts = await this.service.getAll();
+
+      return res.status(201).json( allProducts );
     } catch (error) {
       next(error);
     }
@@ -42,16 +43,39 @@ class ProductController {
     }
   }
 
+  async getBySearchTerm(req, res, next) {
+    const { q } = req.query;
+    try {
+      const products = await this.service.getBySearchTerm(q || '');
+      res.status(200).json(products);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async update(req, res, next) {
     try {
-      const { product } = req.body;
-      await this.service.update(product);
-      
+      const productsSerialized = payloadSerializer(req.body);
+
+      await Promise.all(productsSerialized.map(async (product) => {
+        console.log(product)
+        await this.service.update(product);
+      }));
+
       const products = await this.service.getAll();
 
-      const productsUpdate = { ...products.dataValues };
+      return res.status(200).json(products);
+    } catch (error) {
+      next(error);
+    }
+  }
 
-      return res.status(200).json(productsUpdate);
+  async delete(req, res, next) {
+    try {
+      const { id } = req.params;
+      await this.service.delete(id);
+
+      return res.status(204).end();
     } catch (error) {
       next(error);
     }
