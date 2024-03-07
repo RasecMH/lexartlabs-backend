@@ -7,7 +7,7 @@ const productRouter = require('./routes/ProductRouter');
 
 const app = express();
 app.use(express.json());
-app.use(cors({origin: 'https://lexartlabs-frontend.vercel.app'}));
+app.use(cors({origin: 'https://lexartlabs-frontend.vercel.app', credentials: true}));
 app.use(cookieParser());
 
 
