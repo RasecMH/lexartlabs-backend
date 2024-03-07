@@ -24,7 +24,7 @@ const payloadSerializer = (payload) => {
         brand: payload.brand || payload.details.brand,
         model: payload.model || payload.details.model,
         price: payload.price,
-        color: payload.color || payload.details.price,
+        color: payload.color || payload.details.color,
     };
     result.push(newProduct);
   }

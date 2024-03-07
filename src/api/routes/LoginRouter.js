@@ -10,6 +10,12 @@ const {
 const loginRouter = express.Router();
 const loginController = new LoginController();
 
+loginRouter.get(
+  '/validate', 
+  (req, res, next) => tokenValidation(req, res, next),
+  (req, res, next) => res.sendStatus(200)
+  );
+
 loginRouter.post(
   '/register',
   (req, res, next) => newUserValidation(req, res, next),
@@ -21,9 +27,6 @@ loginRouter.post(
   (req, res, next) => loginValidation(req, res, next),
   (req, res, next) => loginController.findUser(req, res, next),
 );
-
-loginRouter.get('/validate', (req, res, next) =>
-  tokenValidation(req, res, next));
 
 loginRouter.delete(
   '/:id',

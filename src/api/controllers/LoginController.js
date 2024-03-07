@@ -26,7 +26,6 @@ class LoginController {
       const login = await this.serviceLogin.findUser(email, password);
 
       const token = generateToken(login);
-
       return res.cookie('token', token).status(200).json(login);
     } catch (error) {
       next(error);
