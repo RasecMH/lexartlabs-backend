@@ -13,7 +13,7 @@ class LoginController {
 
       const token = generateToken(user);
 
-      return res.cookie('token', token).status(201).json(user);;
+      return res.cookie('token', token).status(201).json({...user, token});;
     } catch (error) {
       next(error);
     }
@@ -26,7 +26,7 @@ class LoginController {
       const login = await this.serviceLogin.findUser(email, password);
 
       const token = generateToken(login);
-      return res.cookie('token', token).status(200).json(login);
+      return res.cookie('token', token).status(200).json({...login, token});
     } catch (error) {
       next(error);
     }
