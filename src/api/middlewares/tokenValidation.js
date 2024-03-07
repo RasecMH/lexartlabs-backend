@@ -7,6 +7,7 @@ const secret = process.env.JWT_SECRET || 'secret_key';
 module.exports = async (req, res, next) => {
 try {
   const token = req.cookies.token;
+  console.log(token)
   if (!token) {
     return next({ type: 'TOKEN_ERROR', message: 'Token not found' });
   }
